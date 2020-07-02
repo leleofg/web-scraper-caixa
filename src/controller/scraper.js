@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
-module.exports.scrape = async (data) => {
-  const browser = await puppeteer.launch({ headless: true });
+module.exports.scrape = async (user, password) => {
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
   await page.setUserAgent(
@@ -12,7 +12,7 @@ module.exports.scrape = async (data) => {
     height: 768,
   });
 
-  await login(page);
+  await login(page, user, password);
   const accountInfo = await getAccountInfo(page);
   const statement = await getStatement(page);
 
@@ -24,13 +24,13 @@ module.exports.scrape = async (data) => {
   };
 };
 
-async function login(page) {
+async function login(page, user, password) {
   await page.goto("https://internetbanking.caixa.gov.br/sinbc/#!nb/login");
 
   await page.waitFor(".showMessageBox");
   await page.waitFor(2000);
 
-  await page.type("#nomeUsuario", data.user);
+  await page.type("#nomeUsuario", user);
   await page.keyboard.press("Enter");
 
   await page.waitFor(4000);
@@ -39,9 +39,9 @@ async function login(page) {
   await page.waitFor("#teclado");
   await page.waitFor(2000);
 
-  await page.evaluate(() => {
-    document.querySelector("#password").value = data.password;
-  });
+  await page.evaluate((password) => {
+    document.querySelector("#password").value = password;
+  }, password);
 
   await page.click("#btnConfirmar");
 }

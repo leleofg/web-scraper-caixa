@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
   let result = {};
 
   try {
-    result = await scraper.scrape(req.body);
+    result = await scraper.scrape(req.body.user, req.body.password);
     res.render("home", { result });
   } catch (error) {
     res.render("login", { error: "Credenciais inválidas" });
