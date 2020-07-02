@@ -27,7 +27,7 @@ A web scraper to access Caixa Economica Bank
     + `$ npm run start`
 2. Open your browser
     + `$ localhost:4000`
-3. Put login e password
+3. Put your login and password
 4. See your account info
 
 **Used libraries**
