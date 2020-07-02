@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <title>Web Scraping Caixa</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center text-primary mt-4">Caixa Econômica Federal</h1>
+        <a class="text-right" href="/">
+            <button type="button" class="btn btn-info">Sair</button>
+        </a>
+        <h5 class="text-center mb-6"> <%= result.accountInfo.nome %> </h5>
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">Saldo</h5>
+                  <small> <%= result.accountInfo.saldo %> </small>
+                </div>
+              </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Agência</h5>
+                <small> <%= result.accountInfo.agencia %> </small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Operação</h5>
+                <small> <%= result.accountInfo.operacao %> </small>
+              </div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Conta</h5>
+                <small> <%= result.accountInfo.conta %> </small>
+              </div>
+            </a>
+        </div>
+        <div class="card mt-4" style="width: 18rem;">
+            <div class="card-header">
+                Informações
+            </div>
+            <ul class="list-group list-group-flush"></ul>
+                <% result.statement.situationsBalance.forEach(situation => { %>
+                    <li class="list-group-item"> <%= situation.description %> - R$ <%= situation.balance %> </li>
+                <% }) %>
+            </ul>
+        </div>
+        <div class="mt-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">NR</th>
+                    <th scope="col">Histórico</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Saldo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% result.statement.statements.forEach(statement => { %>
+                        <tr>
+                            <td> <%= statement.data %> </td>
+                            <td> <%= statement.nr %> </td>
+                            <td> <%= statement.hist %> </td>
+                            <td> <%= statement.val %> </td>
+                            <td> <%= statement.sal %> </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</body>
+</html>
